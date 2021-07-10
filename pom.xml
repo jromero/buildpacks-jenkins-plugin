@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>4.16</version>
+        <relativePath />
+    </parent>
+    <groupId>io.jenkins.plugins</groupId>
+    <artifactId>buildpacks</artifactId>
+    <version>${revision}${changelist}</version>
+    <packaging>hpi</packaging>
+    <properties>
+        <revision>1.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <jenkins.version>2.277.1</jenkins.version>
+        <java.level>8</java.level>
+        <workflow.version>1.13</workflow.version>
+        <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+        <workflow-cps.version>2.91</workflow-cps.version>    
+        <script-security.version>1.77</script-security.version>
+        <workflow-aggregator.version>2.6</workflow-aggregator.version>    
+        <docker-workflow.version>1.26</docker-workflow.version>     
+        <git.version>4.7.0</git.version>
+    </properties>
+    <name>Buildpacks Plugin</name>
+    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.jenkins.tools.bom</groupId>
+                <artifactId>bom-2.277.x</artifactId>
+                <version>26</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+        <url>https://github.com/${gitHubRepo}</url>
+        <tag>${scmTag}</tag>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+     <dependencies>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-cps</artifactId>
+            <version>${workflow-cps.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>script-security</artifactId>
+            <version>${script-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-aggregator</artifactId>
+            <version>${workflow-aggregator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>docker-workflow</artifactId>
+            <version>${docker-workflow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git</artifactId>
+            <version>${git.version}</version>
+        </dependency>
+    </dependencies>
+</project>
