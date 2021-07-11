@@ -12,23 +12,13 @@ class ArrayListIsZeroException extends RuntimeException {
 
 public class Version {
 
-    public long major;
-    public long minor;
+    public long Major;
+    public long Minor;
 
     Version(){}
     Version(long major, long minor){
-        this.major = major;
-        this.minor = minor;
-    }
-
-    public static Version MustParse(String v) {
-        Version version = new Version();
-        try {
-            version = NewVersion(v);          
-        } catch (Exception e) {
-            System.out.println(e.getMessage());  
-        }
-        return version;
+        this.Major = major;
+        this.Minor = minor;
     }
 
     public static Version NewVersion(String v) {
@@ -89,5 +79,29 @@ public class Version {
             allMatches.add(group);
         }
         return allMatches;
+    }
+
+    public int Compare(Version o) {
+        if (this.Major != o.Major) {
+            if (this.Major < o.Major) {
+                return -1;
+            }
+    
+            if (this.Major > o.Major) {
+                return 1;
+            }
+        }
+    
+        if (this.Minor != o.Minor) {
+            if (this.Minor < o.Minor) {
+                return -1;
+            }
+    
+            if (this.Minor > o.Minor) {
+                return 1;
+            }
+        }
+    
+        return 0;
     }
 }

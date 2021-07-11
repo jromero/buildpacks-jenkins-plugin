@@ -1,7 +1,9 @@
 package io.jenkins.plugins.cmd;
 
+import java.io.File;
 import java.nio.file.Paths;
-import io.jenkins.plugins.lifecycle.api.Version;
+
+import io.jenkins.plugins.lifecycle.api.*;
 
 public class Flags {
 
@@ -61,17 +63,39 @@ public class Flags {
 	static final String EnvUID                 = "CNB_USER_ID";
 	static final String EnvUseDaemon           = "CNB_USE_DAEMON"; // defaults to false
 
-	public static String DefaultGroupPath(platformAPI, String layersDir) {
-		return defaultPath(DefaultGroupFile, platformAPI, layersDir)
-	}
-
-	public static String defaultPath(String fileName, platformAPI, String layersDir) {
-		if (Version.MustParse(platformAPI).Compare(Version.MustParse("0.5")) < 0) || (layersDir == "") {
+	public static String defaultPath(String fileName, String platformAPI, String layersDir) {
+		if (Api.MustParse(platformAPI).Compare(Api.MustParse("0.5")) < 0 || layersDir == "") {
 			// prior to platform api 0.5, the default directory was the working dir.
 			// layersDir is unset when this call comes from the rebaser - will be fixed as part of https://github.com/buildpacks/spec/issues/156
-			return filepath.Join(".", fileName);
+			return Paths.get(".", fileName).toString();
 		}
-		return filepath.Join(layersDir, fileName); // starting from platform api 0.5, the default directory is the layers dir.
+		return Paths.get(layersDir, fileName).toString(); // starting from platform api 0.5, the default directory is the layers dir.
 	}
+
+	public static String DefaultGroupPath(String platformAPI, String layersDir) {
+		return defaultPath(DefaultGroupFile, platformAPI, layersDir);
+	}
+
+	public static String DefaultPlanPath(String platformAPI, String layersDir) {
+		return defaultPath(DefaultPlanFile, platformAPI, layersDir);
+	}
+
+	public static String DefaultOrderPath(String platformAPI, String layersDir) {
+		String cnbOrderPath = Paths.get(rootDir, "cnb", "order.toml").toString();
+	
+		// prior to Platform API 0.6, the default is /cnb/order.toml
+		if (Api.MustParse(platformAPI).Compare(Api.MustParse("0.6")) < 0) {
+			return cnbOrderPath;
+		}
+	
+		// the default is /<layers>/order.toml or /cnb/order.toml if not present
+		String layersOrderPath = Paths.get(layersDir, "order.toml").toString();
+		if (!(new File(layersOrderPath)).exists()) {
+			return cnbOrderPath;
+		}
+		return layersOrderPath;
+	}
+
+	
 
 }
