@@ -30,16 +30,16 @@ class DetectCmd extends DetectArgs{
             return Exit.FailErrCode(new Error("received unexpected arguments"), Exit.CodeInvalidArgs, "parse arguments");
         }
     
-        if (this.groupPath == Exit.PlaceholderGroupPath) {
-            this.groupPath = Exit.DefaultGroupPath(this.platform.API(), this.layersDir);
+        if (this.groupPath == Flags.PlaceholderGroupPath) {
+            this.groupPath = Flags.DefaultGroupPath(this.platform.API(), this.layersDir);
         }
     
-        if (this.planPath == Exit.PlaceholderPlanPath) {
-            this.planPath = Exit.DefaultPlanPath(this.platform.API(), this.layersDir);
+        if (this.planPath == Flags.PlaceholderPlanPath) {
+            this.planPath = Flags.DefaultPlanPath(this.platform.API(), this.layersDir);
         }
     
-        if (this.orderPath == Exit.PlaceholderOrderPath) {
-            this.orderPath = Exit.DefaultOrderPath(this.platform.API(), this.layersDir);
+        if (this.orderPath == Flags.PlaceholderOrderPath) {
+            this.orderPath = Flags.DefaultOrderPath(this.platform.API(), this.layersDir);
         }
     
         return null;
