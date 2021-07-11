@@ -45,6 +45,14 @@ class DetectCmd extends DetectArgs{
         return null;
     }
 
+    public static Error Privileges() {
+        // detector should never be run with privileges
+        if (priv.IsPrivileged()) {
+            return cmd.FailErr(errors.New("refusing to run as root"), "build")
+        }
+        return nil
+    }
+
 }
 
 public class Detect {
