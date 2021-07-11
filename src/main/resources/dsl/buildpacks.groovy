@@ -21,43 +21,6 @@ def call(body) {
 
 }
 
-def runViaDocker(config) {
-    node(config.machine) {
-        docker.image(config.docker_image).inside {
-            runScripts(config)
-        }
-    }
-}
-
-
-/** Run the before/script combination */
-def runScripts(config) {
-    envList = []
-    for ( e in config.env ) {
-        envList.add("${e.getKey()}=${e.getValue()}")
-    }
-    withEnv(envList) {
-
-        /* checkout the codes */
-        if (config.git_repo == null) {
-            checkout scm
-        } else {
-            git config.git_repo
-        }
-
-        /* run the basic build steps */
-        if (config.before_script != null) {
-            sh config.before_script
-        }
-        sh config.script
-        if (config.after_script != null) {
-            sh config.after_script
-        }
-
-
-    }
-}
-
 /**
  * Read the detail from the exception to be used in the failure message
  * https://issues.jenkins-ci.org/browse/JENKINS-28119 will give better options.
