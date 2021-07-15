@@ -8,10 +8,8 @@ def call(body) {
     body.delegate = config
     body()
 
-    /** Run the build scripts */
-
     try {
-
+        
         echo "${config.builder}"
 
     } catch (Exception rethrow) {
@@ -29,7 +27,7 @@ def failureDetail(exception) {
     /* not allowed to access StringWriter
     def w = new StringWriter()
     exception.printStackTrace(new PrintWriter(w))
-    return w.toString();
-    */
+    return w.toString();*/
+    
     return exception.toString()
 }

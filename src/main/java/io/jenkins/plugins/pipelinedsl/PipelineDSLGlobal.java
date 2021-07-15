@@ -2,10 +2,10 @@ package io.jenkins.plugins.pipelinedsl;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyCodeSource;
+
 import org.jenkinsci.plugins.workflow.cps.CpsScript;
 import org.jenkinsci.plugins.workflow.cps.CpsThread;
 import org.jenkinsci.plugins.workflow.cps.GlobalVariable;
-
 import java.io.*;
 
 public abstract class PipelineDSLGlobal extends GlobalVariable {
@@ -32,6 +32,7 @@ public abstract class PipelineDSLGlobal extends GlobalVariable {
 
         GroovyCodeSource gsc = new GroovyCodeSource(r, getFunctionName() + ".groovy", cl.getResource(scriptPath).getFile());
         gsc.setCachable(true);
+        System.out.println(gsc.toString());
 
         Object pipelineDSL = c.getExecution()
                 .getShell()
@@ -42,7 +43,8 @@ public abstract class PipelineDSLGlobal extends GlobalVariable {
         binding.setVariable(getName(), pipelineDSL);
         r.close();
 
-
+        System.out.println("test");
+        
         return pipelineDSL;
     }
 
