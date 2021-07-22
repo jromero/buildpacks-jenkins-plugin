@@ -6,6 +6,8 @@ work/
 .classpath
 .factorypath
 .apt_generated_tests/
+.apt_generated/
+hs_*
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
