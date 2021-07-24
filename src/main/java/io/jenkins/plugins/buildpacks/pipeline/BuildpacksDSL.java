@@ -1,25 +1,18 @@
 package io.jenkins.plugins.buildpacks.pipeline;
 
-import hudson.CloseProofOutputStream;
 import hudson.Extension;
-import hudson.Launcher;
-import hudson.model.Hudson;
-
-import hudson.model.TaskListener;
-import hudson.util.StreamTaskListener;
 
 import org.jenkinsci.plugins.workflow.cps.GlobalVariable;
 import org.jenkinsci.plugins.workflow.cps.CpsScript;
-import org.jenkinsci.plugins.dockerbuildstep.cmd.CreateContainerCommand;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.ProxyWhitelist;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.StaticWhitelist;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.File;
+import dev.snowdrop.buildpack.BuildpackBuilder;
 //import java.io.OutputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 //import org.jenkinsci.plugins.dockerbuildstep.cmd.CreateContainerCommand;
 @Extension
 public class BuildpacksDSL extends GlobalVariable {
@@ -66,25 +59,31 @@ public class BuildpacksDSL extends GlobalVariable {
         
         public BuildpacksPipelineDSL(){}
         
-        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c){
+        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c) throws Exception {
             // config variables is contains builder, path, imageName etc.
             LinkedHashMap<String, Object> config = new LinkedHashMap<String, Object>(c);
-
-            for (Map.Entry<String, Object> ite : config.entrySet())
-                switch (ite.getKey()) {
+            
+            for (Map.Entry<String, Object> it : config.entrySet())
+                switch (it.getKey()) {
                     case "builder":
-                        setBuilder(ite.getValue().toString());
+                        setBuilder(it.getValue().toString());
                         break;
                     case "imageName":
-                        setImageName(ite.getValue().toString());
+                        setImageName(it.getValue().toString());
                         break;
                     case "path":
-                        setPath(ite.getValue().toString());
+                        setPath(it.getValue().toString());
                         break;
                     default:
                         break;
                 }
             
+            BuildpackBuilder.get()
+                .withContent(new File(getPath()))
+                .withBuildImage(getBuilder())
+                .withFinalImage(getImageName())
+                .build();
+
         }
         public String getBuilder(){
             return this.builder;
