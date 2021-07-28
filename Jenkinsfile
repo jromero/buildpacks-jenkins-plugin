@@ -1,3 +1,7 @@
+
+environment = {
+    test = "test"
+}
 buildpacks {
 
     builder  = "some/builder"

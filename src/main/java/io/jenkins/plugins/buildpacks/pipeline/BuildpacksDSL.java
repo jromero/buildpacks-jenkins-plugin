@@ -2,18 +2,20 @@ package io.jenkins.plugins.buildpacks.pipeline;
 
 import hudson.Extension;
 
+import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.StaticWhitelist;
+import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.ProxyWhitelist;
 import org.jenkinsci.plugins.workflow.cps.GlobalVariable;
 import org.jenkinsci.plugins.workflow.cps.CpsScript;
-import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.ProxyWhitelist;
-import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.StaticWhitelist;
 
-import java.io.IOException;
-import java.io.File;
-import dev.snowdrop.buildpack.BuildpackBuilder;
-//import java.io.OutputStream;
 import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Map;
-//import org.jenkinsci.plugins.dockerbuildstep.cmd.CreateContainerCommand;
+import java.io.File;
+
+import dev.snowdrop.buildpack.BuildpackBuilder.LogReader;
+import dev.snowdrop.buildpack.BuildpackBuilder;
+
 @Extension
 public class BuildpacksDSL extends GlobalVariable {
 
@@ -35,12 +37,12 @@ public class BuildpacksDSL extends GlobalVariable {
 
     @Extension
     public static class MiscWhitelist extends ProxyWhitelist {
+        
         /**
          * Methods to add to the script-security whitelist for this plugin to work.
          *
          * @throws IOException
          */
-        
         public MiscWhitelist() throws IOException {
             super(new StaticWhitelist(
                     "method java.util.Map size",
@@ -53,37 +55,24 @@ public class BuildpacksDSL extends GlobalVariable {
     @Extension
     public static class BuildpacksPipelineDSL {     
         
+        private PrintStream ps = null;
         private String builder = null;
         private String path = null;
         private String imageName = null;
         
         public BuildpacksPipelineDSL(){}
         
-        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c) throws Exception {
-            // config variables is contains builder, path, imageName etc.
-            LinkedHashMap<String, Object> config = new LinkedHashMap<String, Object>(c);
-            
-            for (Map.Entry<String, Object> it : config.entrySet())
-                switch (it.getKey()) {
-                    case "builder":
-                        setBuilder(it.getValue().toString());
-                        break;
-                    case "imageName":
-                        setImageName(it.getValue().toString());
-                        break;
-                    case "path":
-                        setPath(it.getValue().toString());
-                        break;
-                    default:
-                        break;
-                }
-            
-            BuildpackBuilder.get()
-                .withContent(new File(getPath()))
-                .withBuildImage(getBuilder())
-                .withFinalImage(getImageName())
-                .build();
+        /**
+         * 
+         * @param c
+         * @throws Exception
+         */
+        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps) throws Exception {
+                      
+            extractParameters(c);
 
+            this.ps = ps;
+            
         }
         public String getBuilder(){
             return this.builder;
@@ -108,7 +97,111 @@ public class BuildpacksDSL extends GlobalVariable {
         public void setImageName(String i){
             this.imageName = i;
         }
-    
+
+        /**
+         * 
+         * @param c
+         * @return
+         */
+        public int extractParameters(LinkedHashMap<String, Object> c){
+            
+            
+            // config variables is contains builder, path, imageName etc.
+            LinkedHashMap<String, Object> config = new LinkedHashMap<String, Object>(c);
+            
+            for (Map.Entry<String, Object> it : config.entrySet())
+                switch (it.getKey()) {
+                    case "builder":
+                        setBuilder(it.getValue().toString());
+                        break;
+                    case "imageName":
+                        setImageName(it.getValue().toString());
+                        break;
+                    case "path":
+                        setPath(it.getValue().toString());
+                        break;
+                    default:
+                        break;
+                }
+
+            return 0;
+
+        }
+        
+        /**
+         * 
+         * @throws Exception
+         */
+        public void checkParameters() throws Exception {
+
+            if(getPath().isEmpty())
+                throw new Exception("The variable 'path' cannot be empty.");
+            if(getBuilder().isEmpty())
+                throw new Exception("The variable 'builder' cannot be empty.");
+            if(getImageName().isEmpty())
+                throw new Exception("The variable 'imageName' cannot be empty.");
+        
+        }
+        
+        /**
+         * 
+         * @return
+         * @throws Exception
+         */
+        public BuildpackBuilder build() throws Exception {
+          
+            checkParameters();
+            
+            BuildpacksLogger logger = new BuildpacksLogger(this.ps);
+
+            BuildpackBuilder bpb = BuildpackBuilder.get();
+
+            bpb = bpb.withContent(new File(getPath()));
+
+            bpb = bpb.withBuildImage(getBuilder());
+
+            bpb = bpb.withFinalImage(getImageName());
+            
+            bpb.build(logger);
+
+            return bpb;
+        } 
+        
+    }
+
+    @Extension
+    public static class BuildpacksLogger implements LogReader {
+
+        private PrintStream ps;
+
+        BuildpacksLogger(){}
+
+        BuildpacksLogger(PrintStream ps){
+            this.ps = ps;
+        }
+
+        @Override
+        public boolean stripAnsiColor() {
+            return true;
+        }
+
+        @Override
+        public void stdout(String message) {
+            if (message.endsWith("\n")) {
+                message = message.substring(0, message.length() - 1);
+            }           
+            ps.println(message);            
+        }
+
+        @Override
+        public void stderr(String message) {
+            if (message.endsWith("\n")) {
+                message = message.substring(0, message.length() - 1);
+            }
+            ps.println(message);
+        } 
+
+        
     }
 
 }
