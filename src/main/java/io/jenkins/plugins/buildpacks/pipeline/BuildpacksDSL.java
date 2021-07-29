@@ -174,9 +174,9 @@ public class BuildpacksDSL extends GlobalVariable {
 
         private PrintStream ps;
 
-        BuildpacksLogger(){}
+        public BuildpacksLogger(){}
 
-        BuildpacksLogger(PrintStream ps){
+        public BuildpacksLogger(PrintStream ps){
             this.ps = ps;
         }
 

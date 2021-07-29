@@ -24,6 +24,7 @@ class Buildpacks implements Serializable {
         body.delegate = config
         body()
 
+        // todo
         def logger = this.script.getContext(TaskListener.class).getLogger()
 
         // creating a new instance, when we give the 'config' array in the constructor, the variables is transferred.

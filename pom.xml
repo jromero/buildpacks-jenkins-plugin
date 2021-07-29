@@ -16,12 +16,12 @@
         <changelist>-SNAPSHOT</changelist>
         <jenkins.version>2.277.1</jenkins.version>
         <java.level>8</java.level>
-        <workflow.version>1.13</workflow.version>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
         <workflow-cps.version>2.91</workflow-cps.version>    
         <script-security.version>1.77</script-security.version>
         <workflow-aggregator.version>2.6</workflow-aggregator.version>    
         <docker-workflow.version>1.26</docker-workflow.version>     
+        <docker-commons.version>1.17</docker-commons.version>
         <git.version>4.7.0</git.version>
     </properties>
     <name>Buildpacks Plugin</name>
@@ -105,48 +105,23 @@
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-aggregator</artifactId>
             <version>${workflow-aggregator.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>docker-commons</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>docker-workflow</artifactId>
             <version>${docker-workflow.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>docker-commons</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>docker-commons</artifactId>
+            <version>${docker-commons.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>git</artifactId>
             <version>${git.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>docker-build-step</artifactId>
-            <version>2.7</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpcore</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-compress</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>buildpack-client</artifactId>
@@ -162,5 +137,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
     </dependencies>
 </project>
