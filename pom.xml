@@ -22,7 +22,6 @@
         <workflow-aggregator.version>2.6</workflow-aggregator.version>    
         <docker-workflow.version>1.26</docker-workflow.version>     
         <docker-commons.version>1.17</docker-commons.version>
-        <git.version>4.7.0</git.version>
     </properties>
     <name>Buildpacks Plugin</name>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
@@ -116,12 +115,7 @@
             <artifactId>docker-commons</artifactId>
             <version>${docker-commons.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>git</artifactId>
-            <version>${git.version}</version>
-        </dependency>
-        
+
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>buildpack-client</artifactId>

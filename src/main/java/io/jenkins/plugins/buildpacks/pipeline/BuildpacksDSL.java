@@ -6,10 +6,12 @@ import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.StaticWhitelist;
 import org.jenkinsci.plugins.scriptsecurity.sandbox.whitelists.ProxyWhitelist;
 import org.jenkinsci.plugins.workflow.cps.GlobalVariable;
 import org.jenkinsci.plugins.workflow.cps.CpsScript;
+import org.jenkinsci.plugins.workflow.cps.EnvActionImpl;
 
 import java.util.LinkedHashMap;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.io.File;
 
@@ -56,9 +58,11 @@ public class BuildpacksDSL extends GlobalVariable {
     public static class BuildpacksPipelineDSL {     
         
         private PrintStream ps = null;
-        private String builder = null;
-        private String path = null;
-        private String imageName = null;
+        private EnvActionImpl env = null;
+
+        private String builder = "";
+        private String path = "";
+        private String imageName = "";
         
         public BuildpacksPipelineDSL(){}
         
@@ -67,12 +71,13 @@ public class BuildpacksDSL extends GlobalVariable {
          * @param c
          * @throws Exception
          */
-        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps) throws Exception {
-                      
-            extractParameters(c);
+        public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps, EnvActionImpl env) throws Exception {
 
             this.ps = ps;
+            this.env = env;
             
+            extractParameters(c);
+
         }
         public String getBuilder(){
             return this.builder;
@@ -98,6 +103,10 @@ public class BuildpacksDSL extends GlobalVariable {
             this.imageName = i;
         }
 
+        public String getWorkspace(){
+            return this.env.getProperty("WORKSPACE");
+        }
+
         /**
          * 
          * @param c
@@ -118,8 +127,14 @@ public class BuildpacksDSL extends GlobalVariable {
                         setImageName(it.getValue().toString());
                         break;
                     case "path":
+                        //setPath(Paths.get(getPath(), it.getValue().toString()).toString());
                         setPath(it.getValue().toString());
+                        //setPath(Paths.get(getWorkspace(), it.getValue().toString()).toString());
                         break;
+                    /*case "withGit":
+                        // if git is used the path is updated.
+                        setPath(Paths.get(getWorkspace(), getPath()).toString());
+                        break;*/
                     default:
                         break;
                 }
@@ -171,7 +186,7 @@ public class BuildpacksDSL extends GlobalVariable {
 
     @Extension
     public static class BuildpacksLogger implements LogReader {
-
+        
         private PrintStream ps;
 
         public BuildpacksLogger(){}
