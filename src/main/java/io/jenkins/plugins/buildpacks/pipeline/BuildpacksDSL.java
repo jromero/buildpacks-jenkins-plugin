@@ -128,8 +128,8 @@ public class BuildpacksDSL extends GlobalVariable {
                         break;
                     case "path":
                         //setPath(Paths.get(getPath(), it.getValue().toString()).toString());
-                        setPath(it.getValue().toString());
-                        //setPath(Paths.get(getWorkspace(), it.getValue().toString()).toString());
+                        //setPath(it.getValue().toString());
+                        setPath(Paths.get(getWorkspace(), it.getValue().toString()).toString());
                         break;
                     /*case "withGit":
                         // if git is used the path is updated.

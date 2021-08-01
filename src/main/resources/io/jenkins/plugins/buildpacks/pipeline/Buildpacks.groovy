@@ -29,7 +29,7 @@ class Buildpacks implements Serializable {
 
         // creating a new instance, when we give the 'config' array in the constructor, the variables is transferred.
         BuildpacksPipelineDSL pipeline = new BuildpacksPipelineDSL(config, logger, this.script.env)
-        //pipeline.build()
+        pipeline.build()
         
 
     }
