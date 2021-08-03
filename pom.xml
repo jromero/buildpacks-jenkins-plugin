@@ -22,6 +22,7 @@
         <workflow-aggregator.version>2.6</workflow-aggregator.version>    
         <docker-workflow.version>1.26</docker-workflow.version>     
         <docker-commons.version>1.14</docker-commons.version>
+        <guava.version>19.0</guava.version>
     </properties>
     <name>Buildpacks Plugin</name>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
@@ -58,6 +59,19 @@
             <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <id>Javier</id>
+            <name>ROMERO</name>
+            <email>j.romero.1214@gmail.com</email>
+        </developer>
+        <developer>
+            <id>Fatih</id>
+            <name>ATES</name>
+            <email>fatiiates@gmail.com</email>
+        </developer>
+    </developers>
 
     <scm>
         <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
@@ -126,19 +140,19 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>docker-commons</artifactId>
-            <version>1.14</version>
+            <version>${docker-commons.version}</version>
         </dependency>
 
-        <dependency> <!-- see maskClasses config -->
+        <dependency> 
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>buildpack-client</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.1.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>

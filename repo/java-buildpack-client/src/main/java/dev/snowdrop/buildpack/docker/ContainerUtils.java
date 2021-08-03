@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.Volume;
-
-import org.apache.commons.io.IOUtils;
 
 import dev.snowdrop.buildpack.docker.ContainerEntry.ContentSupplier;
 
@@ -116,6 +115,15 @@ public class ContainerUtils {
     }
   }
 
+  private static int transfer(InputStream source, OutputStream target) throws IOException {
+    byte[] buf = new byte[8192];
+    int length;
+    while ((length = source.read(buf)) > 0) {
+        target.write(buf, 0, length);
+    }
+    return 0;
+  }
+
   /**
    * Adds content to the container, with specified uid/gid
    */
@@ -175,7 +183,8 @@ public class ContainerUtils {
                   throw new IOException("Error ContentSupplier gave null for getData");
                 }
                 
-                IOUtils.copy(is, tout);
+                transfer(is, tout);
+                //IOUtils.copy(is, tout);
                 //is.transferTo(tout);
               }
               tout.closeArchiveEntry();
