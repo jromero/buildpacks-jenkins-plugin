@@ -57,7 +57,13 @@ Example:
         }
     }
 
-# INSTALLATION
+# DEVELOPMENT
+
+Generally people use IntelliJ IDEA environment for development. You can find the configurations for the IntelliJ IDEA [here](https://www.jenkins.io/doc/developer/building/intellij/).  
+
+If you are looking for something light, you can install [VSCode](https://code.visualstudio.com/). And [Java plugin packet](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) will make your job much easier.
+
+## INSTALLATION
 
 Jenkins plugins work with Java 8 and the project was developed with maven infrastructure. So we'll start by setting up these two first.
 
@@ -73,10 +79,20 @@ You can download maven to your machine from [this link](https://maven.apache.org
 
 For installation, you can follow the steps in [this link](https://maven.apache.org/install.html).
 
-    
+## Running the plugin locally
 
-# DEVELOPMENT
+Firstly, install your dependencies on your computer with the command below and make sure there are no errors.
 
-Generally people use IntelliJ IDEA environment for development. You can find the configurations for the IntelliJ IDEA [here](https://www.jenkins.io/doc/developer/building/intellij/).  
+    mvn install
 
-If you are looking for something light, you can install [VSCode](https://code.visualstudio.com/). And [Java plugin packet](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) will make your job much easier.
+Then verify the accuracy of the tests with the following command.
+
+    mvn verify
+
+And now run your Jenkins instance locally with the following command. By default it will start running on port 8080.
+
+    mvn hpi:run
+
+If you want to run it on a different port, you can use the command below.
+
+    mvn hpi:run -Djetty.port=PORT
