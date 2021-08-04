@@ -1,9 +1,22 @@
 # CONTENT
 
-- [INSTALLATION](#INSTALLATION)
-- [USAGE](#USAGE)  
-- [BASIC EXAMPLE](#BASIC_EXAMPLE)  
-- [DEVELOPMENT](#DEVELOPMENT)  
+- [CONTENT](#content)
+- [INSTALLATION](#installation)
+    - [Docker.sock access for Ubuntu](#dockersock-access-for-ubuntu)
+- [USAGE](#usage)
+    - [Parameters](#parameters)
+        - [Path](#path)
+        - [Image Name](#image-name)
+        - [Builder](#builder)
+- [BASIC EXAMPLE](#basic-example)  
+- [DEVELOPMENT](#development)  
+    - [INSTALLATION](#installation-1)
+        - [JDK 8](#jdk-8)
+        - [MAVEN](#maven)
+        - [Running the plugin locally](#running-the-plugin-locally)
+        - [How do I compile codes to the .hpi file ?
+](#how-do-I-compile-codes-to-the-hpi-file-
+)
 
 # INSTALLATION
 
