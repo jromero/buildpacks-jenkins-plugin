@@ -4,7 +4,7 @@ The plugin is currently not released on jenkins. So you have to install it local
 
 1. First, download the [hpi](https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi) file.
 
-    wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
+        wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
 
 2. Then go to Jenkins Dashboard > Manage Jenkins > Manage Plugins. You should have reached the plugin manager.
 
