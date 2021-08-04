@@ -4,25 +4,25 @@ The plugin is currently not released on jenkins. So you have to install it local
 
 1. First, download the [hpi](https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi) file.
 
-    wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
+        wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
 
 2. Then go to Jenkins Dashboard > Manage Jenkins > Manage Plugins. You should have reached the plugin manager.
 
-![step2.1](https://user-images.githubusercontent.com/51250249/128188400-5243dde3-26db-4a41-9356-73f738327091.png)
-![step2.2](https://user-images.githubusercontent.com/51250249/128188405-a2f44321-22a9-4276-b7aa-af1d7420a916.png)
+    ![step2.1](https://user-images.githubusercontent.com/51250249/128188400-5243dde3-26db-4a41-9356-73f738327091.png)
+    ![step2.2](https://user-images.githubusercontent.com/51250249/128188405-a2f44321-22a9-4276-b7aa-af1d7420a916.png)
 
 
 3. Next, click on the ```advanced``` tab.
 
-![step3](https://user-images.githubusercontent.com/51250249/128188407-82dfd79b-af90-4371-901b-10aff76b92f3.png)
+    ![step3](https://user-images.githubusercontent.com/51250249/128188407-82dfd79b-af90-4371-901b-10aff76b92f3.png)
 
 4. Upload the 'buildpacks.hpi' file that you downloaded earlier to the section below in this tab and press the upload button.
 
-![step4](https://user-images.githubusercontent.com/51250249/128188408-c7275110-5629-4fe3-88d3-a02c6e344f1d.png)
+    ![step4](https://user-images.githubusercontent.com/51250249/128188408-c7275110-5629-4fe3-88d3-a02c6e344f1d.png)
 
 5. After pressing the upload button, it will also install some dependencies for the buildpack plugin in the window that opens. When the buildpacks shows as ```success``` as below, it means that the plugin has been installed successfully.
 
-![step5](https://user-images.githubusercontent.com/51250249/128189292-af39a65d-3322-44bc-9565-46ae75fa19b5.png)
+    ![step5](https://user-images.githubusercontent.com/51250249/128189292-af39a65d-3322-44bc-9565-46ae75fa19b5.png)
 
 After successfully installing the plugin
 
