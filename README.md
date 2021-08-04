@@ -43,7 +43,7 @@ As seen in the output above, if it has a docker group, you can include the jenki
 
     sudo usermod -aG docker jenkins
 
-
+Congratulations! If you have successfully completed this step, you can now use the plugin.
 
 # USAGE
 
@@ -171,3 +171,31 @@ And now run your Jenkins instance locally with the following command. By default
 If you want to run it on a different port, you can use the command below.
 
     mvn hpi:run -Djetty.port=PORT
+
+## How do I compile codes to the .hpi file ?
+
+You can start by cloning the repository first.
+
+    git clone https://github.com/fatiiates/buildpacks-jenkins-plugin
+
+Then run the commands below by entering the directory of the java-buildpack-client dependency in the local maven repository in this repository.
+
+    cd repo/java-buildpack-client
+
+Then
+
+    mvn install
+    mvn verify
+
+If the commands run successfully, go back to the main directory of the repostory.
+
+    cd ../../
+
+Then you should run the following commands again in this directory.
+
+    mvn install
+    mvn verify
+
+If the commands are run successfully, the .hpi file will be created in the target directory as follows.
+
+![step8](https://user-images.githubusercontent.com/51250249/128193333-3a91ff5d-03cf-4beb-bab9-fef93a27c341.png)
