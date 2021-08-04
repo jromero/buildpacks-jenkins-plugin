@@ -191,7 +191,7 @@ If the commands run successfully, go back to the main directory of the repostory
 
     cd ../../
 
-Then you should run the following commands again in this directory.
+Then you must run the following commands again in this directory.
 
     mvn install
     mvn verify
