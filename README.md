@@ -1,3 +1,10 @@
+# CONTENT
+
+- [INSTALLATION](#INSTALLATION)
+- [USAGE](#USAGE)  
+- [BASIC EXAMPLE](#BASIC_EXAMPLE)  
+- [DEVELOPMENT](#DEVELOPMENT)  
+
 # INSTALLATION
 
 The plugin is currently not released on jenkins. So you have to install it locally.
@@ -63,35 +70,6 @@ In the simplest way, a DSL example looks like the following.
 
     }
 
-
-# BASIC EXAMPLE
-
-This script downloads data from remote git repository and runs buildpack lifecycle according to given parameters.
-
-
-    pipeline {
-        agent any
-        stages {
-            stage('build') {
-                steps {
-                    script {
-                        git url: 'https://github.com/buildpacks/samples'
-                        
-                        buildpacks {
-                            builder = "cnbs/sample-builder:alpine"
-                            path = "apps/java-maven"
-                            imageName = "image-test:test"
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-After a successful run it will give the following output
-
-![step6](https://user-images.githubusercontent.com/51250249/128190301-670b54c3-6fba-4a47-8b72-86586773176e.png)
-
 ## Parameters
 
 ### Path
@@ -131,6 +109,34 @@ Example:
             builder = 'cnbs/sample-builder:alpine'
         }
     }
+
+# BASIC EXAMPLE
+
+This script downloads data from remote git repository and runs buildpack lifecycle according to given parameters.
+
+
+    pipeline {
+        agent any
+        stages {
+            stage('build') {
+                steps {
+                    script {
+                        git url: 'https://github.com/buildpacks/samples'
+                        
+                        buildpacks {
+                            builder = "cnbs/sample-builder:alpine"
+                            path = "apps/java-maven"
+                            imageName = "image-test:test"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+After a successful run it will give the following output
+
+![step6](https://user-images.githubusercontent.com/51250249/128190301-670b54c3-6fba-4a47-8b72-86586773176e.png)
 
 # DEVELOPMENT
 
