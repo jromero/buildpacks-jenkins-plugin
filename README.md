@@ -1,3 +1,50 @@
+# INSTALLATION
+
+The plugin is currently not released on jenkins. So you have to install it locally.
+
+1. First, download the [hpi](https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi) file.
+
+    wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
+
+2. Then go to Jenkins Dashboard > Manage Jenkins > Manage Plugins. You should have reached the plugin manager.
+
+![step2.1](https://user-images.githubusercontent.com/51250249/128188400-5243dde3-26db-4a41-9356-73f738327091.png)
+![step2.2](https://user-images.githubusercontent.com/51250249/128188405-a2f44321-22a9-4276-b7aa-af1d7420a916.png)
+
+
+3. Next, click on the ```advanced``` tab.
+
+![step3](https://user-images.githubusercontent.com/51250249/128188407-82dfd79b-af90-4371-901b-10aff76b92f3.png)
+
+4. Upload the 'buildpacks.hpi' file that you downloaded earlier to the section below in this tab and press the upload button.
+
+![step4](https://user-images.githubusercontent.com/51250249/128188408-c7275110-5629-4fe3-88d3-a02c6e344f1d.png)
+
+5. After pressing the upload button, it will also install some dependencies for the buildpack plugin in the window that opens. When the buildpacks shows as ```success``` as below, it means that the plugin has been installed successfully.
+
+![step5](https://user-images.githubusercontent.com/51250249/128189292-af39a65d-3322-44bc-9565-46ae75fa19b5.png)
+
+After successfully installing the plugin
+
+This plugin needs access to the docker socket. Jenkins cannot access this socket by default.
+
+## Docker.sock access for Ubuntu
+
+By default the group of docker.sock is assigned 'docker'. But to be sure, you can check with the command below.
+
+    ls -l /var/run/docker.sock
+
+In the returned output the group name is the 4th parameter.
+
+    $ ls -l /var/run/docker.sock   
+    srw-rw---- 1 tati docker 0 Ağu  4 13:10 /var/run/docker.sock  
+
+As seen in the output above, if it has a docker group, you can include the jenkins user in the docker group with the following command.
+
+    sudo usermod -aG docker jenkins
+
+
+
 # USAGE
 
 Basically, three parameters(path, image name and builder image) are needed for an application to be converted into an OCI image by buildpacks. So, in buildpacks DSL you can get an OCI image just by passing these three data as parameters.
@@ -16,6 +63,34 @@ In the simplest way, a DSL example looks like the following.
 
     }
 
+
+# BASIC EXAMPLE
+
+This script downloads data from remote git repository and runs buildpack lifecycle according to given parameters.
+
+
+    pipeline {
+        agent any
+        stages {
+            stage('build') {
+                steps {
+                    script {
+                        git url: 'https://github.com/buildpacks/samples'
+                        
+                        buildpacks {
+                            builder = "cnbs/sample-builder:alpine"
+                            path = "apps/java-maven"
+                            imageName = "image-test:test"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+After a successful run it will give the following output
+
+![step6](https://user-images.githubusercontent.com/51250249/128190301-670b54c3-6fba-4a47-8b72-86586773176e.png)
 
 ## Parameters
 
