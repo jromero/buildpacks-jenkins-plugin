@@ -18,13 +18,13 @@ class Buildpacks implements Serializable {
     // first executed method is similar to main method in java
     public void call(final Closure body) {
 
-        // The config array is the array that holds the variables.
+        // the config array is the array that holds the variables.
         def config = [:]
         body.resolveStrategy = Closure.DELEGATE_FIRST
         body.delegate = config
         body()
 
-        // todo
+        // jenkins logger
         def logger = this.script.getContext(TaskListener.class).getLogger()
 
         // creating a new instance, when we give the 'config' array in the constructor, the variables is transferred.
