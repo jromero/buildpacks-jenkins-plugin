@@ -19,7 +19,7 @@ Web: https://why.jromero.codes/
 
 **Student**
 
-Full Name: Fatih ATES
+Full Name: Fatih ATES  
 E-mail: [fatiiates@gmail.com](mailto:jfatiiates@gmail.com)  
 GitHub: [fatiiates](https://github.com/fatiiates)  
 Web: https://fatiiates.github.io/
