@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+    <f:section title="${%Buildpacks Plugin}">
+        <f:entry field="relative" title="${%Relative}">
+            <f:textbox/>
+        </f:entry>
+        <f:entry field="fileSystem" title="${%Filesystem}">
+            <f:textbox/>
+        </f:entry>
+        <f:entry field="url" title="${%URL}">
+            <f:textbox/>
+        </f:entry>
+        <f:entry field="docker" title="${%Docker}">
+            <f:textbox/>
+        </f:entry>
+        <f:entry field="cnbBuilderResource" title="${%CNB Builder Resource}">
+            <f:textbox/>
+        </f:entry>
+        <f:entry field="cnbRegistryResource" title="${%CNB Registry Resource}">
+            <f:textbox/>
+        </f:entry>
+    </f:section>
+</j:jelly>
