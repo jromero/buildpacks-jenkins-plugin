@@ -77,7 +77,8 @@ public class BuildpacksDSL extends GlobalVariable {
         private String path = "";
         private String imageName = "";
         private Path envFile = Paths.get("");
-        private Map<String, String> env = new HashMap<>();;
+        private Map<String, String> env = new HashMap<>();
+        private ArrayList<String> buildpack = new ArrayList<String>();
 
         public BuildpacksPipelineDSL() {
         }
@@ -92,8 +93,6 @@ public class BuildpacksDSL extends GlobalVariable {
         public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps, EnvActionImpl jenkinsEnv)
                 throws Exception {
 
-            System.out.println(conf.getRelative());
-            ;
             this.ps = ps;
             this.jenkinsEnv = jenkinsEnv;
 
@@ -121,6 +120,10 @@ public class BuildpacksDSL extends GlobalVariable {
             return this.env;
         }
 
+        public ArrayList<String> getBuildpack() {
+            return this.buildpack;
+        }
+
         public void setBuilder(String b) {
             this.builder = b;
         }
@@ -140,6 +143,11 @@ public class BuildpacksDSL extends GlobalVariable {
         public void setEnv(Map<String, String> e) {
             this.env = e;
         }
+
+        public void setBuildpack(ArrayList<String> b) {
+            this.buildpack = b;
+        }
+
 
         public String getJenkinsWorkspace() {
             return this.jenkinsEnv.getProperty("WORKSPACE");
@@ -197,7 +205,7 @@ public class BuildpacksDSL extends GlobalVariable {
         }
 
         public void extractBuildpack(ArrayList<String> al) throws Exception {
-            Map<String, String> buildpacks = new HashMap<>();
+            ArrayList<String> buildpacks = new ArrayList<String>();
 
             int i = 0;
             for (Object bp : al) {
@@ -214,17 +222,32 @@ public class BuildpacksDSL extends GlobalVariable {
                         "urn:cnb:registry((:.*){1}⏐(@(.*){1})?)?"
                     };
 
-                    Pattern pattern = Pattern.compile("http(s)?://(.*)*/(.*)+", Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = pattern.matcher(b);
-                    if(matcher.find())
-                        isBuildpackFormat = true;         
-                    /*File f = new File(value);
-                    if (!f.exists()) 
-                        return FormValidation.error("Path is not available. It must be in the form of: <path>"); */ 
-        
-                }
+                    for (String r : regex) {
 
+                        Pattern pattern = Pattern.compile(r, Pattern.CASE_INSENSITIVE);
+                        Matcher matcher = pattern.matcher(b);
+                        if(matcher.find()){
+                            System.out.println(b);
+                            isBuildpackFormat = true; 
+                            break;
+                        }
+
+                    }
+
+                    if(!isBuildpackFormat){
+                        File f = new File(Paths.get(getJenkinsWorkspace(), b).toString());
+                        if (!f.exists()) 
+                            throw new Exception(String.format("element %d in buildpack variable does not conform to formats. See: https://buildpacks.io/docs/app-developer-guide/specific-buildpacks/", i));
+                    }
+
+                    buildpacks.add(b);
+                    
+                }
+                i++;
             }
+
+            setBuildpack(buildpacks);
+            //buildpacks.forEach(key -> System.out.println(key));
         }
 
         /**
