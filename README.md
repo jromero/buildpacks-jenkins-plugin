@@ -15,8 +15,7 @@
         - [MAVEN](#maven)
         - [Running the plugin locally](#running-the-plugin-locally)
         - [How do I compile codes to the .hpi file ?
-](#how-do-I-compile-codes-to-the-hpi-file-
-)
+](#how-do-I-compile-codes-to-the-hpi-file-)
 
 # INSTALLATION
 
@@ -120,6 +119,37 @@ Example:
     script {
         buildpacks {
             builder = 'cnbs/sample-builder:alpine'
+        }
+    }
+
+### Environment Variable(s)
+
+Takes environment variables to be used during build as array or string. If it is not passed as a parameter, it means that it does not need an additional environment variables.
+
+Example:
+
+    script {
+        buildpacks {
+            env = "ENV1=test1"
+        }
+    }
+
+or
+
+    script {
+        buildpacks {
+            env = [
+                "ENV1=test1",
+                "ENV2=test2"
+            ]
+        }
+    }
+
+or you can pass filename(The given file must be in the Jenkins building workspace. It is intended for use with Git.)
+
+    script {
+        buildpacks {
+            envFile = "./.env"
         }
     }
 

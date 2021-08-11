@@ -4,9 +4,6 @@ package io.jenkins.plugins.buildpacks.pipeline
 import org.jenkinsci.plugins.workflow.cps.CpsScript
 
 import groovy.lang.Closure
-import hudson.Launcher
-import hudson.model.AbstractBuild
-
 
 import io.jenkins.plugins.buildpacks.pipeline.BuildpacksDSL.BuildpacksPipelineDSL
 
@@ -29,13 +26,10 @@ class Buildpacks implements Serializable {
 
         // jenkins logger
         def logger = this.script.getContext(TaskListener.class).getLogger()
-        def test = this.script.getContext(Launcher.class).isUnix()
-        System.out.println(test)
 
         // creating a new instance, when we give the 'config' array in the constructor, the variables is transferred.
         BuildpacksPipelineDSL pipeline = new BuildpacksPipelineDSL(config, logger, this.script.env)
-        //pipeline.build()
-        
+        pipeline.build()
 
     }
 

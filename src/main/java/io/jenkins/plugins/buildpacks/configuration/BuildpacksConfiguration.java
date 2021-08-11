@@ -87,13 +87,13 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
     }
 
     @DataBoundSetter
-    public void getCnbBuilderResource(String cnbBuilderResource) {
+    public void setCnbBuilderResource(String cnbBuilderResource) {
         this.cnbBuilderResource = cnbBuilderResource;
         save();
     }
 
     @DataBoundSetter
-    public void getCnbRegistryResource(String cnbRegistryResource) {
+    public void setCnbRegistryResource(String cnbRegistryResource) {
         this.cnbRegistryResource = cnbRegistryResource;
         save();
     }
@@ -115,7 +115,7 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
 
         if(!value.isEmpty()){
             
-            Pattern pattern = Pattern.compile("file://(.*)+/(.*)+", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("file://(.*)*/(.*)+", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(value);
             if(matcher.find()) {
                 File f = new File(value);
@@ -135,16 +135,10 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
 
         if(!value.isEmpty()){
 
-            Pattern pattern = Pattern.compile("http(s){0,1}://(.*)+/(.*)+", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("http(s)?://(.*)*/(.*)+", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(value);
-            if(matcher.find()) {
-                String ping = "todo";
-                // TODO: send ping to the URL
-                //return FormValidation.error("Server is not responding. It must be in the form of: http[s]://<host>/<path>");  
-    
-            } 
-            else 
-                return FormValidation.error("Filesystem variable must be in the form of: http[s]://<host>/<path>");  
+            if(!matcher.find())
+                return FormValidation.error("URL variable must be in the form of: http[s]://<host>/<path>");  
 
         }
 
@@ -155,10 +149,10 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
 
         if(!value.isEmpty()){
 
-            Pattern pattern = Pattern.compile("docker://(.*)+/(.*)+(:(.*)⏐@(.*)){1}", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("docker://(.*)*/(.*)+((:.*){1}(⏐@(.*))?)?", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(value);
             if(!matcher.find())
-                return FormValidation.error("Filesystem variable must be in the form of: docker://[<host>]/<path>[:<tag>⏐@<digest>]");  
+                return FormValidation.error("Docker variable must be in the form of: docker://[<host>]/<path>[:<tag>⏐@<digest>]");  
 
         }
 
@@ -169,7 +163,7 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
 
         if(!value.isEmpty()){
 
-            Pattern pattern = Pattern.compile("urn:cnb:builder[:<id>[@<version>]] urn:cnb:builder:(:(.*)⏐@(.*)){1}", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("urn:cnb:builder((:.*){1}⏐(@(.*){1})?)?", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(value);
             if(!matcher.find()) 
                 return FormValidation.error("CNB Builder Resource variable must be in the form of: urn:cnb:builder[:<id>[@<version>]]");  
@@ -183,7 +177,7 @@ public class BuildpacksConfiguration extends GlobalConfiguration {
 
         if(!value.isEmpty()){
 
-            Pattern pattern = Pattern.compile("urn:cnb:builder[:<id>[@<version>]] urn:cnb:registry:(:(.*)⏐@(.*)){1}", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile("urn:cnb:registry((:.*){1}⏐(@(.*){1})?)?", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(value);
             if(!matcher.find()) 
                 return FormValidation.error("CNB Registry Resource variable must be in the form of: urn:cnb:registry[:<id>[@<version>]]");  
