@@ -10,7 +10,9 @@ pipeline {
                         builder = "cnbs/sample-builder:alpine"
                         path = "apps/java-maven"
                         imageName = "image-test:test"
+                        env = "testEnv=Test"
                     }
+
                 }
             }
         }

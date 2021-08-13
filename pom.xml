@@ -17,12 +17,15 @@
         <jenkins.version>2.277.1</jenkins.version>
         <java.level>8</java.level>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+        <bom.version>26</bom.version>
+ 
         <workflow-cps.version>2.91</workflow-cps.version>    
         <script-security.version>1.77</script-security.version>
         <workflow-aggregator.version>2.6</workflow-aggregator.version>    
         <docker-workflow.version>1.26</docker-workflow.version>     
         <docker-commons.version>1.14</docker-commons.version>
         <guava.version>19.0</guava.version>
+        <java-buildpack-client.version>0.0.1</java-buildpack-client.version>
     </properties>
     <name>Buildpacks Plugin</name>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
@@ -32,21 +35,7 @@
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
                 <artifactId>bom-2.277.x</artifactId>
-                <version>26</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.jenkins-ci.plugins</groupId>
-                <artifactId>docker-commons</artifactId>
-                <version>1.15</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>1.21</version>
+                <version>${bom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -89,11 +78,6 @@
 		    <id>jitpack.io</id>
 		    <url>https://jitpack.io</url>
 		</repository>
-        <repository>
-            <id>project.local</id>
-            <name>project</name>
-            <url>file:${project.basedir}/repo</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -149,10 +133,13 @@
             <version>${guava.version}</version>
         </dependency>
 
+        <!--
+            with snowdrop
+
         <dependency>
             <groupId>dev.snowdrop</groupId>
             <artifactId>buildpack-client</artifactId>
-            <version>0.1.0</version>
+            <version>${java-buildpack-client.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
@@ -164,6 +151,23 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        
+        -->
+       
+        <dependency>
+            <groupId>com.github.fatiiates</groupId>
+            <artifactId>java-buildpack-client</artifactId>
+            <version>${java-buildpack-client.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency> 
     </dependencies>
 </project>

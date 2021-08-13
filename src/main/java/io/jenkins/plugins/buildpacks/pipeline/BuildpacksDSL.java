@@ -92,7 +92,8 @@ public class BuildpacksDSL extends GlobalVariable {
          */
         public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps, EnvActionImpl jenkinsEnv)
                 throws Exception {
-
+            
+            System.out.println(conf.getRelative());
             this.ps = ps;
             this.jenkinsEnv = jenkinsEnv;
 
