@@ -18,7 +18,6 @@
         <java.level>8</java.level>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
         <bom.version>26</bom.version>
- 
         <workflow-cps.version>2.91</workflow-cps.version>    
         <script-security.version>1.77</script-security.version>
         <workflow-aggregator.version>2.6</workflow-aggregator.version>    
@@ -75,9 +74,9 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
         <repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>

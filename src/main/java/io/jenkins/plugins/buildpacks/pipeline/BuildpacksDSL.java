@@ -30,11 +30,9 @@ import dev.snowdrop.buildpack.BuildpackBuilder;
 @Extension
 public class BuildpacksDSL extends GlobalVariable {
 
-    private static final String BUILDPACKS = "buildpacks";
-
     @Override
     public String getName() {
-        return BUILDPACKS;
+        return "buildpacks";
     }
 
     @Override
@@ -62,10 +60,8 @@ public class BuildpacksDSL extends GlobalVariable {
 
         /* jenkins variables */
 
-        // jenkins logger
-        private PrintStream ps = null;
-        // jenkins env variables
-        private EnvActionImpl jenkinsEnv = null;
+        private PrintStream ps = null;              // jenkins logger
+        private EnvActionImpl jenkinsEnv = null;    // jenkins env variables
 
         /* Global Configuration */
 
@@ -80,6 +76,7 @@ public class BuildpacksDSL extends GlobalVariable {
         private Map<String, String> env = new HashMap<>();
         private ArrayList<String> buildpack = new ArrayList<String>();
 
+
         public BuildpacksPipelineDSL() {
         }
 
@@ -93,7 +90,6 @@ public class BuildpacksDSL extends GlobalVariable {
         public BuildpacksPipelineDSL(LinkedHashMap<String, Object> c, PrintStream ps, EnvActionImpl jenkinsEnv)
                 throws Exception {
             
-            System.out.println(conf.getRelative());
             this.ps = ps;
             this.jenkinsEnv = jenkinsEnv;
 
@@ -149,7 +145,21 @@ public class BuildpacksDSL extends GlobalVariable {
             this.buildpack = b;
         }
 
+        /**
+         * This method returns the CNB Global variable from global configuration console
+         * TODO: it does not have a function at the moment, added as an example, a guide for future global configurations
+         * 
+         * @return String
+         */
+        public String getGlobalConfVariable(){
+            return conf.getCnbGlobalVariable();
+        }
 
+        /**
+         * This method returns the Jenkins's current workspace
+         * 
+         * @return String
+         */
         public String getJenkinsWorkspace() {
             return this.jenkinsEnv.getProperty("WORKSPACE");
         }
@@ -205,6 +215,12 @@ public class BuildpacksDSL extends GlobalVariable {
 
         }
 
+        /**
+         * This method extracts buildpack parameters to local buildpack variable (TODO: it will connect to java-buildpack-client)
+         * 
+         * @param al
+         * @throws Exception
+         */
         public void extractBuildpack(ArrayList<String> al) throws Exception {
             ArrayList<String> buildpacks = new ArrayList<String>();
 

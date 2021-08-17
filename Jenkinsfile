@@ -11,6 +11,7 @@ pipeline {
                         path = "apps/java-maven"
                         imageName = "image-test:test"
                         env = "testEnv=Test"
+                        envFile = "./build-env"
                     }
 
                 }
