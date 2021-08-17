@@ -8,6 +8,7 @@
         - [Path](#path)
         - [Image Name](#image-name)
         - [Builder](#builder)
+        - [Environment Variable(s)](#environment-variables)
 - [BASIC EXAMPLE](#basic-example)  
 - [DEVELOPMENT](#development)  
     - [INSTALLATION](#installation-1)
