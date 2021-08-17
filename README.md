@@ -227,20 +227,7 @@ You can start by cloning the repository first.
 
     git clone https://github.com/fatiiates/buildpacks-jenkins-plugin
 
-Then run the commands below by entering the directory of the java-buildpack-client dependency in the local maven repository in this repository.
-
-    cd repo/java-buildpack-client
-
-Then
-
-    mvn install
-    mvn verify
-
-If the commands run successfully, go back to the main directory of the repostory.
-
-    cd ../../
-
-Then you must run the following commands again in this directory.
+Then run the commands below by entering the main directory of the repository.
 
     mvn install
     mvn verify
