@@ -24,6 +24,7 @@
         <docker-workflow.version>1.26</docker-workflow.version>     
         <docker-commons.version>1.14</docker-commons.version>
         <guava.version>19.0</guava.version>
+        <git.version>3.6.0</git.version>
         <java-buildpack-client.version>0.0.1</java-buildpack-client.version>
     </properties>
     <name>Buildpacks Plugin</name>
@@ -130,6 +131,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git</artifactId>
+            <version>${git.version}</version>
         </dependency>
 
         <!--
