@@ -154,7 +154,7 @@
         -->
        
         <dependency>
-            <groupId>com.github.fatiiates</groupId>
+            <groupId>com.github.jromero</groupId>
             <artifactId>java-buildpack-client</artifactId>
             <version>${java-buildpack-client.version}</version>
             <exclusions>

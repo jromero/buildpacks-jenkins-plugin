@@ -22,9 +22,9 @@
 
 The plugin is currently not released on jenkins. So you have to install it locally.
 
-1. First, download the [hpi](https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi) file.
+1. First, download the [hpi](https://github.com/jromero/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi) file.
 
-        wget https://github.com/fatiiates/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
+        wget https://github.com/jromero/buildpacks-jenkins-plugin/releases/download/v0.1.0/buildpacks.hpi
 
 2. Then go to Jenkins Dashboard > Manage Jenkins > Manage Plugins. You should have reached the plugin manager.
 
@@ -226,7 +226,7 @@ If you want to run it on a different port, you can use the command below.
 
 You can start by cloning the repository first.
 
-    git clone https://github.com/fatiiates/buildpacks-jenkins-plugin
+    git clone https://github.com/jromero/buildpacks-jenkins-plugin
 
 Then run the commands below by entering the main directory of the repository.
 
